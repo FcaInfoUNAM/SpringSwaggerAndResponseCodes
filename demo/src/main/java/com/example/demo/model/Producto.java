@@ -1,11 +1,8 @@
 package com.example.demo.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -16,14 +13,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Builder
@@ -52,6 +48,10 @@ public class Producto {
     @OneToMany(mappedBy = "producto",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Setter 
     private Set<Image> imagenes;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "productos", fetch = FetchType.EAGER)
+    private Set<Department> deparments = new HashSet<>();
     
     
 }
